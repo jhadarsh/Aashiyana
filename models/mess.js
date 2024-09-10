@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const listingSchema = new mongoose.Schema({
+const messSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -15,6 +15,11 @@ const listingSchema = new mongoose.Schema({
   location: String,
   college: String,
   contact_number:Number,
+  menu:[
+    {
+        type : String,
+    },
+  ],
   reviews: [
     {
       type: Schema.Types.ObjectId, // ya phir mongoose.Schema.Types.ObjectId kar sakte hai
@@ -26,5 +31,5 @@ const listingSchema = new mongoose.Schema({
     ref: "User",
   },
 });
-const Listing = mongoose.model("Listing", listingSchema);
-module.exports = Listing;
+const Mess = mongoose.model("Mess", messSchema);
+module.exports = Mess;

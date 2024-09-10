@@ -3,18 +3,18 @@
 <body>
   
 <div class="row row-col-lg-3">
-  <% for( listing of allListiings) { %>
+  <% for( mess of allmess) { %>
    
     <div class="card" style="width: 20rem;">
-      <a href="/listings/<%= listing.id %>" class="cards-link">
-        <img src="<%= listing.image.url %>" class="card-img-top" alt="Listin_image "style="height: 20rem;">
+      <a href="/mess/<%= mess.id %>" class="cards-link">
+        <img src="<%= mess.image.url %>" class="card-img-top" alt="Listin_image "style="height: 20rem;">
         <!-- this is the overlay property of bootstrap -->
         <div class="card-img-overlay"></div> 
         <div class="card-body">
           <p class="card-text">
-           <b> <%= listing.title %></b> <br>
+           <b> <%= mess.title %></b> <br>
           
-            &#8377; <%= listing.price.toLocaleString("en-IN") %>/month
+            &#8377; <%= mess.price.toLocaleString("en-IN") %>/month
           </p>
         </div>
       </a>

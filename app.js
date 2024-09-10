@@ -1,9 +1,9 @@
-if ( process.env.NODE_ENV != "production") {
-  require('dotenv').config()
-}//jab production phase me pauuchenge tab ham env ko nhi use kar rehehonge
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+} //jab production phase me pauuchenge tab ham env ko nhi use kar rehehonge
 
 // require('dotenv').config()
-// console.log(process.env.SECRET) //npm i dotenv this help us to manage our secret code of cloud storage 
+// console.log(process.env.SECRET) //npm i dotenv this help us to manage our secret code of cloud storage
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate"); //ejs-mate
-
+const Mess = require("./models/mess");
 const ExpressError = require("./utils/ExpressError");
 
 const listings = require("./routes/listing");
@@ -22,7 +22,7 @@ const flash = require("connect-flash"); // npm i connect-flash
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-
+const wrapAsync = require("./utils/wrapAsync");
 
 // use ejs-locals for all ejs templates:
 app.engine("ejs", ejsMate);
@@ -52,7 +52,7 @@ const sessionoption = {
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly : true,
+    httpOnly: true,
   },
 };
 
@@ -69,10 +69,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.currentuser = req.user;//this local is use to send data of user login in navbar.ejs 
+  res.locals.currentuser = req.user; //this local is use to send data of user login in navbar.ejs
   next();
 });
 
@@ -80,20 +80,34 @@ app.use("/listings", listings);
 app.use("/", user);
 app.use("/", review);
 
+//for mess
+app.get(
+  "/mess",
+  wrapAsync(async (req, res) => {
+    let allmess = await Mess.find();
+    res.render("listings/mess.ejs", { allmess });
+  })
+);
 
+//mess show
+app.get(
+  "/mess/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let mess = await Mess.findById(id)
+      .populate({ path: "reviews", populate: { path: "author" } })
+      .populate("owner");
+    if (!mess) {
+      req.flash("error", " mess does not exists !!");
+      res.redirect("/mess");
+    }
+    console.log(mess);
+    res.render("listings/showmess.ejs", { mess });
+  })
+);
 
-// app.get("/listing",async(req,res)=>{
-//     let newlisting = new Listing({
-//         title : "my new home",
-//         description : "my home",
-//         price : 1200,
-//         location : "goa", 
-//         country : "india",
-//     });
-//     await newlisting.save();
-//     console.log("data saved");
-//     res.send("working");
-// })
+//new mess
+
 
 // page not found
 //"*" => iska mtlb phale woo sabhi route se check karega agar koi bhi upar wala route match nhi hoga tabb ye expresserroer ko call karega

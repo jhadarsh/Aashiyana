@@ -29,7 +29,7 @@ router.get("/", wrapAsync(listingcontrol.index));
 router.get("/new", logedin, wrapAsync(listingcontrol.new));
 
 //show route
-router.get("/:id", wrapAsync(listingcontrol.show));
+router.get("/:id", wrapAsync(listingcontrol.show)); 
 
 //create route
 router.post("/",upload.single("listing[image]"), validatelisting, wrapAsync(listingcontrol.create));
