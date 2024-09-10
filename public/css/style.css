@@ -1,0 +1,120 @@
+body{
+    /* // <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 100 to 900 */
+
+font-family: "Roboto Condensed", sans-serif !important;
+font-optical-sizing: auto !important;
+font-weight: 500 !important;
+font-style: normal !important;
+/* footer ko sticky banane ke liye */
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+.container{
+    flex: 1;
+}
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass{
+    color:#fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: black !important;
+    font-weight: 500 !important;
+}
+
+/* footer */
+
+.f-info{
+    display: flex;
+  
+    flex-direction: column;
+    justify-content: center;
+    background-color: #e6e6e6;
+    /* margin-left: 50%; */
+}
+
+.nab{
+    display: flex;
+    justify-content: center;
+}
+.fa-brands{
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+.f-info-links a{
+    text-decoration: none;
+    color: black;
+    margin-right: 1rem;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+    
+}
+
+/* cards */
+
+.row{
+    display: flex;
+    justify-content: space-evenly;
+   
+}
+
+.card{
+    border: none !important;
+    margin-bottom: 3rem !important;
+}
+
+.card-img-top{
+    border-radius: 1.5rem !important;
+}
+
+.cards-link{
+    text-decoration: none;
+    color: black;
+}
+
+/* card propert overlay */
+
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: azure;
+}
+ /* new page */
+.add-btn{
+    background-color: #fe424d !important;
+}
+
+/* show page */
+.showbtn{
+    margin-bottom: 2rem;
+}
+.delt{
+    margin-left: -3rem;
+}
+ .edit-btn a{
+    text-decoration: none !important;
+    color: white !important;
+ }
+/* review */
+ .review{
+    display: flex;
+    justify-content: space-evenly;
+    
+   
+}
+
+.recard{
+    border:2px,black,solid !important;
+    margin: 10px;
+}

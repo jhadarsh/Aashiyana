@@ -1,0 +1,29 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <h3>All Listngs</h3>
+    <!-- <form method="get" action="/listings/new">
+        <button>create new listing</button>
+    </form> -->
+<div class="row row-col-lg-3">
+  <% for( listing of allListiings) { %>
+   
+    <div class="card" style="width: 20rem;">
+      <a href="/listings/<%= listing.id %>" class="cards-link">
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="Listin_image "style="height: 20rem;">
+        <!-- this is the overlay property of bootstrap -->
+        <div class="card-img-overlay"></div> 
+        <div class="card-body">
+          <p class="card-text">
+           <b> <%= listing.title %></b> <br>
+          
+            &#8377; <%= listing.price.toLocaleString("en-IN") %>/month
+          </p>
+        </div>
+      </a>
+      </div>
+  
+    <% } %>
+</div>
+  
+</body>
