@@ -44,6 +44,7 @@ module.exports.edit = async (req, res) => {
     req.flash("error", " listing does not exists !!");
     res.redirect("/listings");
   }
+  
   res.render("listings/edit.ejs", { listing });
 };
 

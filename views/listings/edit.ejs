@@ -18,7 +18,10 @@
         
           </textarea>
           </div>
-
+          <div class="mb-3">
+            Current Image <br>
+            <img src="<%= listing.image.url %>" style="height: 200px ; width: 200px; border-radius: 20px;">
+          </div>
           <div class="mb-3">
             <label for="title" class="form-label">Image</label>
             <input type="file" name="listing[image]" value="<%= listing.image.url %>" class="form-control" required />
