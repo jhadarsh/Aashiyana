@@ -1,106 +1,88 @@
 <% layout("/layouts/boilerplate") %>
 
-<body>
-  <form
-    method="post"
-    action="/listings"
-    class="needs-validation"
-    novalidate
-    enctype="multipart/form-data"
-  >
-    <!-- enctype="multipart/form-data" help us to upload an image to our server -->
-    <div class="row">
-      <div class="col-6 offset-1">
-        <br />
-        <h2>Create a new listing</h2>
-        <br />
-        <div class="mb-3">
-          <label for="title" class="form-label">Title</label>
-          <input
-            type="text"
-            name="listing[title]"
-            placeholder="Enter a Catchy Title"
-            class="form-control"
-            required
-          />
-          <!-- //by the help of form validation of bootstrap -->
-          <div class="valid-feedback">Looks good!</div>
-        </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea
-            name="listing[description]"
-            class="form-control"
-            required
-          ></textarea>
-          <div class="invalid-feedback">Please enter a short description.</div>
-        </div>
+  <body>
+    <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
+      <!-- enctype="multipart/form-data" help us to upload an image to our server -->
+      <div class="row">
+        <div class="col-8 offset-1">
+          <br />
+          <h2>Create a new listing</h2>
+          <br />
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="listing[title]" placeholder="Enter a Catchy Title" class="form-control" required />
+            <!-- //by the help of form validation of bootstrap -->
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please enter a short description.</div>
+          </div>
 
-        <div class="mb-3">
-          <label for="image" class="form-label"
-            >Upload listing image file</label
-          >
-          <input
-            type="file"
-            name="listing[image]"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="mb-3">
-              <label for="price" class="form-label">Price</label>
-              <input
-                name="listing[price]"
-                placeholder="1200"
-                class="form-control"
-                required
-              />
-              <div class="invalid-feedback">Price should be valid.</div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload listing image file</label>
+            <input type="file" name="listing[image]" class="form-control" required />
+          </div>
+          <div class="form-group row">
+            <div class="col">
+              <label for="totalRooms" class="form-label">Total Rooms</label>
+              <input type="number" class="form-control" id="totalRooms" name="listing[totalRooms]"
+                placeholder="Enter total number of rooms" min="1" required>
+            </div>
+            <div class="col">
+              <label for="occupiedRooms" class="form-label">Occupied Rooms</label>
+              <input type="number" class="form-control" id="occupiedRooms" name="listing[occupiedRooms]"
+                placeholder="Enter occupied rooms" min="0" required>
             </div>
           </div>
-          <div class="col-md-8">
-            <div class="mb-3">
-              <label for="location" class="form-label">Location</label>
-              <input
-                type="text"
-                name="listing[location]"
-                placeholder="Delhi"
-                class="form-control"
-                required
-              />
-              <div class="invalid-feedback">Location should be a valid.</div>
+          <div class="form-group">
+            <label for="type" class="form-label">Type of Accommodation</label>
+            <select class="form-control" id="type" name="listing[type]" required>
+              <option value="single">Single Room</option>
+              <option value="shared">Shared Room</option>
+              <option value="PG">Paying Guest (PG)</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input name="listing[price]" placeholder="1200" class="form-control" required />
+                <div class="invalid-feedback">Price should be valid.</div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="listing[location]" placeholder="Delhi" class="form-control" required />
+                <div class="invalid-feedback">Location should be a valid.</div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="mb-3">
-          <label for="college" class="form-label">Nearest College</label>
-          <input
-            type="text"
-            name="listing[college]"
-            placeholder="Dr Akhilesh Das Gupta Institute of Proffesional Studies"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">College should be a valid.</div>
-        </div>
-        <div class="mb-3"></div>
+          <div class="mb-3">
+            <label for="college" class="form-label">Nearest College</label>
+            <input type="text" name="listing[college]"
+              placeholder="Dr Akhilesh Das Gupta Institute of Proffesional Studies" class="form-control" required />
+            <div class="invalid-feedback">College should be a valid.</div>
+          </div>
+          <div class="mb-3">
+            <label for="amenities" class="form-label">Amenities</label>
+            <input type="text" class="form-control" id="amenities" name="listing[amenities]"
+              placeholder="Enter amenities (comma-separated)" required>
+            <small class="form-text text-muted">Example: Wi-Fi, Laundry, Meals</small>
+          </div>
+          <div class="mb-3"></div>
           <label for="contact_number" class="form-label">Contact Number</label>
-          <input
-            type="number"
-            name="listing[contact_number]"
-            placeholder="98971XXXXX"
-            class="form-control"
-            required
-          />
+          <input type="number" name="listing[contact_number]" placeholder="98971XXXXX" class="form-control" required />
           <div class="invalid-feedback">Please Enter a valid number.</div>
         </div>
-
-        <button class="btn btn-dark add-btn">Done</button>
+           <br> <br>
+           <hr>
+        <button class="btn btn-success add-btn ">Done</button>
         <br /><br /><br />
+        </div>
       </div>
-    </div>
-  </form>
-</body>
+    </form>
+  </body>

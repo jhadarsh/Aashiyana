@@ -10,6 +10,11 @@ module.exports.listingSchema = joi.object({
       price: joi.number().required().min(0),
       image: joi.string().allow("", null),
       contact_number: joi.number().required(),
+      amenities: joi.string().required(), 
+      type: joi.string(), 
+      // availability: joi.boolean().required(),
+      totalRooms:joi.number().required().min(1),
+      occupiedRooms: joi.number().required().min(0),
     })
     .required(),
 });

@@ -46,8 +46,27 @@
             <label for="title" class="form-label">Contact number</label>
             <input type="text" name="listing[contact_number]" value="<%= listing.contact_number %>" class="form-control" required />
           </div>
+          <div class="mb-3">
+            <label for="amenities" class="form-label">Amenities</label>
+            <input type="text" class="form-control" id="amenities" name="listing[amenities]"
+              placeholder="Enter amenities (comma-separated)" required>
+            <small class="form-text text-muted">Example: Wi-Fi, Laundry, Meals</small>
+          </div>
+          <div class="form-group row">
+            <div class="col">
+              <label for="totalRooms" class="form-label">Total Rooms</label>
+              <input type="number" class="form-control" id="totalRooms" name="listing[totalRooms]"
+                placeholder="Enter total number of rooms" min="1" required>
+            </div>
+            <div class="col">
+              <label for="occupiedRooms" class="form-label">Occupied Rooms</label>
+              <input type="number" class="form-control" id="occupiedRooms" name="listing[occupiedRooms]"
+                placeholder="Enter occupied rooms" min="0" required>
+            </div>
+          </div>
+          <br><br><hr>
 
-          <button class="btn btn-dark add-btn">Done</button>
+          <button class="btn btn-success add-btn" style="margin-left: 50%;">Done</button>
         </form>
         <br /><br />
       </div>
