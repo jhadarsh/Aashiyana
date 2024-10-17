@@ -7,11 +7,13 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-
+const http = require('http');
+const socketIo = require('socket.io');
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate"); //ejs-mate
 const Mess = require("./models/mess");
+const Chat = require("./models/chats");
 const ExpressError = require("./utils/ExpressError");
 
 const listings = require("./routes/listing");
@@ -24,6 +26,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const wrapAsync = require("./utils/wrapAsync");
+const server = http.createServer(app);
+
+// Initialize Socket.IO
+const io = socketIo(server);
 
 // use ejs-locals for all ejs templates:
 app.engine("ejs", ejsMate);
@@ -32,6 +38,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
+
 
 const dburl = process.env.ATLAS;
 
@@ -77,6 +84,35 @@ const sessionoption = {
 //   res.send("hi i am root");
 // });
 
+// Handle socket connections
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Listen for chat messages from clients
+  socket.on('chat message', (data) => {
+      console.log(`Message from ${data.sender}: ${data.message}`);
+      // Broadcast message to all clients
+      io.emit('chat message', data);
+  });
+
+  // Handle user disconnect
+  socket.on('disconnect', () => {
+      console.log('A user disconnected');
+  });
+});
+
+// socketIo.on('chat message', async (data) => {
+//   const newMessage = new Chat({
+//       roomId: 'room1', // Add dynamic room IDs if needed
+//       sender: data.sender,
+//       message: data.message
+//   });
+
+//   await newMessage.save();
+//   io.emit('chat message', data); // Broadcast to all connected users
+// });
+
+
 app.use(session(sessionoption));
 app.use(flash());
 //for passport
@@ -96,6 +132,8 @@ app.use((req, res, next) => {
 app.use("/listings", listings);
 app.use("/", user);
 app.use("/", review);
+
+
 
 //for mess
 app.get(
@@ -139,6 +177,6 @@ app.use((err, req, res, next) => {
 
 //for schema vaidation install npm i joi
 
-app.listen(8080, (req, res) => {
+server.listen(8080, (req, res) => {
   console.log("port is listening on 8080");
 });
