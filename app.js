@@ -18,6 +18,7 @@ const listings = require("./routes/listing");
 const user = require("./routes/user");
 const review = require("./routes/review");
 const session = require("express-session"); //npm i express-session
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash"); // npm i connect-flash
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -32,6 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
+const dburl = process.env.ATLAS;
+
 main()
   .then(() => {
     console.log("connection established");
@@ -40,13 +43,27 @@ main()
     console.log(err);
   });
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/wonderlust");
+  // await mongoose.connect("mongodb://127.0.0.1:27017/wonderlust");
+  await mongoose.connect(dburl);
 }
 
 //use seession
 
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+  console.log("error in mongo session", err);
+});
+
 const sessionoption = {
-  secret: "mysupersecretcode",
+  store,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -56,9 +73,9 @@ const sessionoption = {
   },
 };
 
-app.get("/", (req, res) => {
-  res.send("hi i am root");
-});
+// app.get("/", (req, res) => {
+//   res.send("hi i am root");
+// });
 
 app.use(session(sessionoption));
 app.use(flash());
@@ -107,7 +124,6 @@ app.get(
 );
 
 //new mess
-
 
 // page not found
 //"*" => iska mtlb phale woo sabhi route se check karega agar koi bhi upar wala route match nhi hoga tabb ye expresserroer ko call karega

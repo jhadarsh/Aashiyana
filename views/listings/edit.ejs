@@ -24,7 +24,7 @@
           </div>
           <div class="mb-3">
             <label for="title" class="form-label">Image</label>
-            <input type="file" name="listing[image]" value="<%= listing.image.url %>" class="form-control" required />
+            <input type="file" name="listing[image]" value="<%= listing.image.url %>" class="form-control"  />
           </div>
           <div class="row">
             <div class="mb-3 col-4">
@@ -39,8 +39,12 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="title" class="form-label">Country</label>
-            <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control" required />
+            <label for="title" class="form-label">College</label>
+            <input type="text" name="listing[college]" value="<%= listing.college %>" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="title" class="form-label">Contact number</label>
+            <input type="text" name="listing[contact_number]" value="<%= listing.contact_number %>" class="form-control" required />
           </div>
 
           <button class="btn btn-dark add-btn">Done</button>
