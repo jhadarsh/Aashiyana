@@ -41,7 +41,7 @@ module.exports.isowner = async (req,res,next)=>{
 
 module.exports.isreviewowner = async (req,res,next)=>{
   let { id, reviewid } = req.params;
-  let review=  await Review.findById(reviewid);
+  let review =  await Review.findById(reviewid);
   if ( !review.author.equals(res.locals.currentuser._id)) {
     req.flash("error","You are not the OWNER of this review!!");
      return res.redirect(`/listings/${id}`);

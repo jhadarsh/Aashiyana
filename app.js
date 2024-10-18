@@ -185,6 +185,10 @@ app.delete("/mess/:id"
   })
 
 );
+
+app.get("/Room/Book",(req , res)=>{
+  res.render("listings/book.ejs");
+})
 //new mess
 
 // page not found

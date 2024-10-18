@@ -1,0 +1,119 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    .booking-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 28px;
+    color: #222;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.confirm-button-book {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff385c;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button-book:hover {
+    background-color: #e31b5f;
+}
+
+#confirmation-message {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#confirmation-message ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="booking-container">
+            <h2>Confirm Your Booking</h2>
+            <form id="booking-form">
+                <label for="roomType">Room Type:</label>
+                <select name="roomType" id="roomType" required>
+                    <option value="single">Single Room</option>
+                    <option value="double">Double Room</option>
+                    <option value="suite">Suite</option>
+                </select>
+
+                <label for="checkInDate">Check-in Date:</label>
+                <input type="date" name="checkInDate" id="checkInDate" required>
+
+                <label for="checkOutDate">Check-out Date:</label>
+                <input type="date" name="checkOutDate" id="checkOutDate" required>
+
+                <label for="guestCount">Number of Guests:</label>
+                <input type="number" name="guestCount" id="guestCount" min="1" required>
+
+                <button type="submit" class="confirm-button-book">Confirm Booking</button>
+            </form>
+
+            <div id="confirmation-message" style="display:none;">
+                <h3>Booking Confirmed!</h3>
+                <p>Thank you for your reservation. Your booking details are as follows:</p>
+                <ul>
+                    <li id="roomTypeDisplay"></li>
+                    <li id="checkInDisplay"></li>
+                    <li id="checkOutDisplay"></li>
+                    <li id="guestCountDisplay"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+     document.getElementById('booking-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get form values
+    const roomType = document.getElementById('roomType').value;
+    const checkInDate = document.getElementById('checkInDate').value;
+    const checkOutDate = document.getElementById('checkOutDate').value;
+    const guestCount = document.getElementById('guestCount').value;
+
+    // Display confirmation message
+    // document.getElementById('roomTypeDisplay').textContent = Room Type: ${roomType};
+    // document.getElementById('checkInDisplay').textContent = Check-in Date: ${checkInDate};
+    // document.getElementById('checkOutDisplay').textContent = Check-out Date: ${checkOutDate};
+    // document.getElementById('guestCountDisplay').textContent = Number of Guests: ${guestCount};
+
+    document.getElementById('booking-form').style.display = 'none';
+    document.getElementById('confirmation-message').style.display = 'block';
+});
+    </script>
+</body>

@@ -11,7 +11,7 @@ module.exports.listingSchema = joi.object({
       image: joi.string().allow("", null),
       contact_number: joi.number().required(),
       amenities: joi.string().required(), 
-      type: joi.string(), 
+      type: joi.string().required(), 
       // availability: joi.boolean().required(),
       totalRooms:joi.number().required().min(1),
       occupiedRooms: joi.number().required().min(0),
