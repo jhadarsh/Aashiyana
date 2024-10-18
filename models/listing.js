@@ -31,12 +31,12 @@ const listingSchema = new mongoose.Schema({
   },
   totalRooms: {
     type: Number,
-    required: true,
+    // required: true,
     min: 1, // At least one room should be there
   },
   occupiedRooms: {
     type: Number,
-    required: true,
+    // required: true,
     min: 0,
     validate: {
       validator: function (v) {

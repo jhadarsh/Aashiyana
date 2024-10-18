@@ -7,7 +7,7 @@ const Listing = require("../models/listing");
 const { logedin, isowner } = require("../middleware");
 const listingcontrol = require("../controllers/listing");
 const multer = require("multer");
-const { storage } = require("../cloudconfigure");
+const { storage } = require("../cloudconfigure"); 
 const upload = multer({ storage });
 //npm i multer is a npm package use to read the files
 

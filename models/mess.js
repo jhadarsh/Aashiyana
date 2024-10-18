@@ -24,7 +24,7 @@ const messSchema = new mongoose.Schema({
     {
       type: Schema.Types.ObjectId, // ya phir mongoose.Schema.Types.ObjectId kar sakte hai
       ref: "Review",
-    },
+    }, 
   ],
   owner: {
     type: Schema.Types.ObjectId,

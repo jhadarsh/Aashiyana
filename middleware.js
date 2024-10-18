@@ -1,5 +1,6 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
+const Mess = require("./models/mess");
 module.exports.logedin = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.redirectUrl = req.originalUrl;

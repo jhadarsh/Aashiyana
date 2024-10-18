@@ -7,14 +7,16 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const http = require('http');
-const socketIo = require('socket.io');
+const http = require("http");
+const socketIo = require("socket.io");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate"); //ejs-mate
 const Mess = require("./models/mess");
+const Review = require("./models/review");
 const Chat = require("./models/chats");
 const ExpressError = require("./utils/ExpressError");
+const { logedin, isowner } = require("./middleware");
 
 const listings = require("./routes/listing");
 const user = require("./routes/user");
@@ -27,6 +29,9 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const wrapAsync = require("./utils/wrapAsync");
 const server = http.createServer(app);
+const multer = require("multer");
+const { storage } = require("./cloudconfigure"); 
+const upload = multer({ storage });
 
 // Initialize Socket.IO
 const io = socketIo(server);
@@ -38,7 +43,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
-
 
 const dburl = process.env.ATLAS;
 
@@ -85,33 +89,21 @@ const sessionoption = {
 // });
 
 // Handle socket connections
-io.on('connection', (socket) => {
-  console.log('A user connected');
+io.on("connection", (socket) => {
+  console.log("A user connected");
 
   // Listen for chat messages from clients
-  socket.on('chat message', (data) => {
-      console.log(`Message from ${data.sender}: ${data.message}`);
-      // Broadcast message to all clients
-      io.emit('chat message', data);
+  socket.on("chat message", (data) => {
+    console.log(`Message from ${data.sender}: ${data.message}`);
+    // Broadcast message to all clients
+    io.emit("chat message", data);
   });
 
   // Handle user disconnect
-  socket.on('disconnect', () => {
-      console.log('A user disconnected');
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
   });
 });
-
-// socketIo.on('chat message', async (data) => {
-//   const newMessage = new Chat({
-//       roomId: 'room1', // Add dynamic room IDs if needed
-//       sender: data.sender,
-//       message: data.message
-//   });
-
-//   await newMessage.save();
-//   io.emit('chat message', data); // Broadcast to all connected users
-// });
-
 
 app.use(session(sessionoption));
 app.use(flash());
@@ -133,8 +125,6 @@ app.use("/listings", listings);
 app.use("/", user);
 app.use("/", review);
 
-
-
 //for mess
 app.get(
   "/mess",
@@ -143,6 +133,26 @@ app.get(
     res.render("listings/mess.ejs", { allmess });
   })
 );
+
+app.post(
+  "/mess",
+  upload.single("mess[image]"),
+  wrapAsync(async (req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    const newmess = new Mess(req.body.mess);
+    newmess.owner = req.user.id; //owner ke information save
+    newmess.image = { url, filename };
+    await newmess.save();
+    console.log("save");
+    req.flash("success", "New listing created!!");
+    res.redirect("/mess");
+  })
+);
+
+app.get("/mess/new", (req, res) => {
+  res.render("listings/newmess.ejs");
+});
 
 //mess show
 app.get(
@@ -161,6 +171,20 @@ app.get(
   })
 );
 
+
+app.delete("/mess/:id"
+  , wrapAsync(async(req ,res) =>{
+    let { id } = req.params;
+    await Mess.findByIdAndDelete(id);
+    req.flash("success", "listing deleted!!");
+    // if (!mess) {
+    //   req.flash("error", " listing does not exists !!");
+    //   res.redirect("/mess");
+    // }
+    res.redirect("/mess");
+  })
+
+);
 //new mess
 
 // page not found

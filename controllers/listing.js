@@ -2,14 +2,51 @@ const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.index = async (req, res) => {
+   // Get filter options from query parameters
+   const { minPrice, maxPrice, location, type, availability, amenities } = req.body;
+ console.log(minPrice);
+   // Build query object
+   let filter = {};
+
+   // Price filter
+   if (minPrice) filter.price = { $gte: parseInt(minPrice) };
+   if (maxPrice) filter.price = { ...filter.price, $lte: parseInt(maxPrice) };
+
+   // Location filter
+   if (location) filter.location = location; // Case-insensitive search
+
+   // Room type filter
+   if (type) filter.type = type;
+
+   // Availability filter
+   if (availability === 'available') filter.occupiedRooms = { $lt: '$totalRooms' };
+   if (availability === 'occupied') filter.occupiedRooms = { $eq: '$totalRooms' };
+
+   // Amenities filter (if multiple amenities are selected)
+   if (amenities) {
+       if (Array.isArray(amenities)) {
+           filter.amenities = { $all: amenities }; // Match all selected amenities
+       } else {
+           filter.amenities = amenities; // Single amenity selected
+       }
+   }
+
+   // Fetch listings based on the applied filters
+   const newlistings = await Listing.find(filter);
+
+   // Render the listings page with filtered results
+   console.log(newlistings);
   let { college } = req.query;
-  if (college == undefined) {
+  if ((college  == undefined)||(newlistings == null)) {
     let allListiings = await Listing.find({});
     res.render("listings/index.ejs", { allListiings });
-  } else {
+  } else if ( college != undefined) {
     let allListiings = await Listing.find({ college: `${college}` });
     res.render("listings/index.ejs", { allListiings }); 
-  }
+  } else {
+    const alllistings = newlistings;
+    res.render('listings', { alllistings });
+  } 
 };
 
 module.exports.new = (req, res) => {
@@ -68,7 +105,7 @@ module.exports.update = async (req, res) => {
     let url = req.file.path;
     let filename = req.file.filename;
     listing.image = { url, filename };
-    await listing.save();
+    await listing.save(); 
   }
 
   req.flash("success", "listing updated!!");

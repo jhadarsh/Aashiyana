@@ -1,9 +1,11 @@
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <!-- border-bottom class is a bootstrap claas which add bottom line  sticky-top help us to stick the nav bar -->
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"
-      ><i class="fa-regular fa-compass"></i
-    ></a>
+    <a class="navbar-brand" href="/listings" >
+    <img src="/logo.png" alt="Logo" style="width: 80px; height: 80px; margin-left: -20px; margin-right: -20px;">
+    
+    </a>
+    
     <button
       class="navbar-toggler"
       type="button"
@@ -35,7 +37,38 @@
       id="navbarNav"
     >
       <ul class="navbar-nav">
-        <a class="nav-link" href="/listings/new">Add Your Rooms</a>
+        <div class="dropdown">
+          <a
+            class="btn login-icon btn-secondary dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-user"></i>
+          </a>
+
+          <ul class="dropdown-menu nav-item">
+            <li>
+              <a
+                class="dropdown-item nav-link"
+                aria-current="page"
+                href="/listings/new"
+                ><b>Add Your Rooms</b></a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item nav-link"
+                aria-current="page"
+                href="/mess/new"
+                ><b>Add Your Kitchens</b></a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- <a class="nav-link" href="/listings/new">Add Your Rooms</a>
+        <a class="nav-link" href="/mess/new">Add Your Kitchens</a> -->
         <% if ( !currentuser) { %>
         <div class="dropdown">
           <a

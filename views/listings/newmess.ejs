@@ -1,0 +1,68 @@
+<% layout("/layouts/boilerplate") %>
+
+  <body>
+    <form method="post" action="/mess" class="needs-validation" novalidate enctype="multipart/form-data">
+      <!-- enctype="multipart/form-data" help us to upload an image to our server -->
+      <div class="row">
+        <div class="col-8 offset-1">
+          <br />
+          <h2>Add your Kitchens/Mess</h2>
+          <br /> 
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="mess[title]" placeholder="Enter a Catchy Title" class="form-control" required />
+            <!-- //by the help of form validation of bootstrap -->
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="mess[description]" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please enter a short description.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload kitchens image file</label>
+            <input type="file" name="mess[image]" class="form-control" required />
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input name="mess[price]" placeholder="1200" class="form-control" required />
+                <div class="invalid-feedback">Price should be valid.</div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="mess[location]" placeholder="Delhi" class="form-control" required />
+                <div class="invalid-feedback">Location should be a valid.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="college" class="form-label">Nearest College</label>
+            <input type="text" name="mess[college]"
+              placeholder="Dr Akhilesh Das Gupta Institute of Proffesional Studies" class="form-control" required />
+            <div class="invalid-feedback">College should be a valid.</div>
+          </div>
+          <div class="mb-3">
+            <label for="menu" class="form-label">Menu</label>
+            <input type="text" class="form-control" id="menu" name="mess[menu]"
+              placeholder="Enter menu (comma-separated)" required>
+            <small class="form-text text-muted">Example: Chawal-dal, razma-chawal, Meals</small>
+          </div>
+          <div class="mb-3"></div>
+          <label for="contact_number" class="form-label">Contact Number</label>
+          <input type="number" name="mess[contact_number]" placeholder="98971XXXXX" class="form-control" required />
+          <div class="invalid-feedback">Please Enter a valid number.</div>
+        </div>
+           <br> <br>
+           <hr>
+        <button class="btn btn-success add-btn ">Done</button>
+        <br /><br /><br />
+        </div>
+      </div>
+    </form>
+  </body>

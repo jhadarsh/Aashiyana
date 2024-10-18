@@ -1,28 +1,99 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid" style="height: 30px; margin-top: -2%;">
-       <div class="upperdiv">
-        <div class="lowerdiv">
-            <form method="get" action="/listings">
-                <button class="lowerbtn" style="width: 400px;">Rooms & PG</button>
-            </form>
-           </div>
-           <div class="lowerdiv">
-            <form method="get" action="/mess">
-                <button class="lowerbtn" style="width: 400px;">Mess & Kitchens</button>
-            </form>
-           </div>
-       </div>
-       <div class="downlowerdiv">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle dropbtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Apply Fillters
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
-       </div>
+  <div class="container-fluid" style="height: 30px; margin-top: -2%;">
+    <div class="upperdiv">
+      <div class="lowerdiv">
+        <form method="get" action="/listings">
+          <button class="lowerbtn" style="width: 400px;">Rooms & PG</button>
+        </form>
+      </div>
+      <div class="lowerdiv">
+        <form method="get" action="/mess">
+          <button class="lowerbtn" style="width: 400px;">Mess & Kitchens</button>
+        </form>
+      </div>
     </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 400px;">
+      Add Filters 
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Fillters</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="filterForm" action="/listings" method="get">
+              <!-- Price Filter -->
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label for="minPrice">Min Price (₹)</label>
+                      <input type="number" class="form-control" name="minPrice" id="minPrice" placeholder="Min Price">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="maxPrice">Max Price (₹)</label>
+                      <input type="number" class="form-control" name="maxPrice" id="maxPrice" placeholder="Max Price">
+                  </div>
+              </div>
+
+              <!-- Location Filter -->
+              <div class="form-group">
+                  <label for="location">Location</label>
+                  <select class="form-control" name="location" id="type">
+                    <option value="">Any</option>
+                    <option value="single">ADGIPS</option>
+                    <option value="shared">BVOCE</option>
+                    <option value="PG">DTU</option>
+                </select>
+              </div>
+
+              <!-- Room Type Filter -->
+              <div class="form-group">
+                  <label for="type">Room Type</label>
+                  <select class="form-control" name="type" id="type">
+                      <option value="">Any</option>
+                      <option value="single">Single</option>
+                      <option value="shared">Shared</option>
+                      <option value="PG">PG</option>
+                  </select>
+              </div>
+
+              <!-- Availability Filter -->
+              <div class="form-group">
+                  <label for="availability">Availability</label>
+                  <select class="form-control" name="availability" id="availability">
+                      <option value="">Any</option>
+                      <option value="available">Available</option>
+                      <option value="occupied">Occupied</option>
+                  </select>
+              </div>
+
+              <!-- Amenities Filter -->
+              <div class="form-group">
+                  <label for="amenities">Amenities</label>
+                  <select multiple class="form-control" name="amenities[]" id="amenities">
+                      <option value="Wi-Fi">Wi-Fi</option>
+                      <option value="Laundry">Laundry</option>
+                      <option value="Meals">Meals</option>
+                      <option value="AC">Air Conditioning</option>
+                      <option value="Parking">Parking</option>
+                      <option value="24/7 Security">24/7 Security</option>
+                  </select>
+                  <small class="form-text text-muted">Hold Ctrl (Windows) or Command (Mac) to select multiple amenities</small>
+              </div>
+
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Apply Filters</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </form>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>
