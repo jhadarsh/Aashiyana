@@ -87,99 +87,101 @@
 
             </div>
             <% } %>
-            <h2>Find Location on Google Maps</h2>
-            <!-- Embedded Google Map -->
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093174!2d144.95565101560693!3d-37.81720994231198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43dbaaa099%3A0x2b0b1a7b7a60d28e!2sFederation%20Square%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2sin!4v1639728361546!5m2!1sen!2sin" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
-            </div>
+              <h2>Find Location on Google Maps</h2>
+              <!-- Embedded Google Map -->
+              <div style="width: 45rem;height: 30rem; border: 3px red solid; " id="mapContainer"></div>
         </div>
       </div>
       <div class="side-box">
-      <div class="chat-main">
-        <% if ((currentuser && currentuser._id.equals(listing.owner._id))|| currentuser ) { %>
-          <div class="card container chat-box"
-            style="width: 20rem; height: 20rem; background-color: rgb(253, 188, 188); border-radius: 20px; padding: 3%;">
+        <div class="chat-main">
+          <% if ((currentuser && currentuser._id.equals(listing.owner._id))|| currentuser ) { %>
+            <div class="card container chat-box"
+              style="width: 20rem; height: 20rem; background-color: rgb(253, 188, 188); border-radius: 20px; padding: 3%;">
 
-            <!-- Chat window -->
-            <div id="messages" class="border card-img-top"
-              style="height: 15rem; background-color: antiquewhite; padding: 2px;">
-              <h3 class="text-center">Live Chat with Host</h3>
-              <hr>
+              <!-- Chat window -->
+              <div id="messages" class="border card-img-top"
+                style="height: 15rem; background-color: antiquewhite; padding: 2px;">
+                <h3 class="text-center">Live Chat with Host</h3>
+                <hr>
+              </div>
+
+
+              <div class="card-body">
+                <form id="chatForm">
+                  <div class="form-group">
+                    <input id="message" class="form-control" placeholder="Type a message...">
+                  </div>
+                  <% if (currentuser && currentuser._id.equals(listing.owner._id) ) { %>
+                    <input type="hidden" id="sender" value="Host123"> <!-- Example sender ID -->
+
+                    <% } %>
+                      <% if (currentuser) { %>
+                        <input type="hidden" id="sender" value="user123"> <!-- Example sender ID -->
+
+                        <% } %>
+                          <button class="btn btn-primary btn-block chat-btn"
+                            style="margin-left: 100px; margin-top: 5px;">Send</button>
+                </form>
+                <p style="margin-bottom: 0%; margin-left: 70px; font-weight: 300;">please wait a while ...</p>
+              </div>
             </div>
 
+            <% } %>
+        </div>
+        <div class="card"
+          style="width: 20rem;margin-top: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+          <h3 style="font-weight: bold;">
+            <%= listing.price %>
+          </h3>
+          <p>Total before taxes</p>
 
-            <div class="card-body"> 
-              <form id="chatForm">
-                <div class="form-group">
-                  <input id="message" class="form-control" placeholder="Type a message...">
-                </div>
-                <% if (currentuser && currentuser._id.equals(listing.owner._id) ) { %>
-                  <input type="hidden" id="sender" value="Host123"> <!-- Example sender ID -->
+          <!-- Date and Guest Information -->
+          <div class="date-guest-section"
+            style="margin-top: 20px; border: 1px solid #e2e2e2; border-radius: 10px; padding: 15px;">
+            <div class="form-row">
+              <!-- Check-in Date -->
+              <div class="col">
+                <label for="checkIn">Check-in</label>
+                <input type="date" id="checkIn" class="form-control" value="checkin">
+              </div>
+              <!-- Check-out Date -->
+              <div class="col">
+                <label for="checkOut">Check-out</label>
+                <input type="date" id="checkOut" class="form-control" value="checkOut">
+              </div>
+            </div>
 
-                  <% } %>
-                    <% if (currentuser) { %>
-                      <input type="hidden" id="sender" value="user123"> <!-- Example sender ID -->
-
-                      <% } %>
-                        <button class="btn btn-primary btn-block chat-btn"
-                          style="margin-left: 100px; margin-top: 5px;">Send</button>
-              </form>
-              <p style="margin-bottom: 0%; margin-left: 70px; font-weight: 300;">please wait a while ...</p>
+            <!-- Guests Dropdown -->
+            <div class="form-group mt-3">
+              <label for="guestCount">Guests</label>
+              <select id="guestCount" class="form-control">
+                <option value="1">1 guest</option>
+                <option value="2">2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+                <option value="5">5 guests</option>
+              </select>
             </div>
           </div>
 
-          <% } %>
-      </div>
-      <div class="card" style="width: 100%;margin-top: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
-        <h3 style="font-weight: bold;"> <%= listing.price %></h3>
-        <p>Total before taxes</p>
-    
-        <!-- Date and Guest Information -->
-        <div class="date-guest-section" style="margin-top: 20px; border: 1px solid #e2e2e2; border-radius: 10px; padding: 15px;">
-            <div class="form-row">
-                <!-- Check-in Date -->
-                <div class="col">
-                    <label for="checkIn">Check-in</label>
-                    <input type="date" id="checkIn" class="form-control" value="checkin">
-                </div>
-                <!-- Check-out Date -->
-                <div class="col">
-                    <label for="checkOut">Check-out</label>
-                    <input type="date" id="checkOut" class="form-control" value="checkOut">
-                </div>
-            </div>
-    
-            <!-- Guests Dropdown -->
-            <div class="form-group mt-3">
-                <label for="guestCount">Guests</label>
-                <select id="guestCount" class="form-control">
-                    <option value="1">1 guest</option>
-                    <option value="2">2 guests</option>
-                    <option value="3">3 guests</option>
-                    <option value="4">4 guests</option>
-                    <option value="5">5 guests</option>
-                </select>
-            </div>
-        </div>
-    
-        <!-- Reserve Button -->
-         <form action="/Room/Book" method="get">
-        <button class="btn btn-primary btn-block mt-4" style="background-color: #ff0066; border-color: #ff0066;">Reserve</button>
-         </form>
-        <!-- Info Text -->
-        <p class="mt-2 text-center">You won't be charged yet</p>
-    
-        <!-- Report Listing Link -->
-        <div class="text-center">
+          <!-- Reserve Button -->
+          <form action="/Room/Book" method="get">
+            <button class="btn btn-primary btn-block mt-4"
+              style="background-color: #ff0066; border-color: #ff0066;">Reserve</button>
+          </form>
+          <!-- Info Text -->
+          <p class="mt-2 text-center">You won't be charged yet</p>
+
+          <!-- Report Listing Link -->
+          <div class="text-center">
             <a href="#" style="color: grey; text-decoration: none;">Report this listing</a>
+          </div>
         </div>
-    </div>
-    
-    </div>
+        <form action="/listings/Questionnaire" method="get">
+          <button>Questionnaire</button>
+        </form>
+
+      </div>
     </div>
     </div>
 
@@ -286,5 +288,32 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
           });
         </script>
+        <script>
+          //Step 1: initialize communication with the platform
+          // Replace variable YOUR_API_KEY with your own apikey
+          var platform = new H.service.Platform({
+              apikey: 'DjIYjgwuL2cHaQlfzXJZSDJIXeRHeYzTigi4t8Tkj28'
+          });
+          var defaultLayers = platform.createDefaultLayers();
+          //Step 2: initialize a map - this map is centered over Europe
+          var map = new H.Map(document.getElementById('mapContainer'),
+              defaultLayers.vector.normal.map,
+              {
+                  center: { lat: 28.679079, lng: 77.069710 },
+                  zoom: 4,
+                  pixelRatio: window.devicePixelRatio || 1
+              }
+          );
+          // This adds a resize listener to make sure that the map occupies the whole container
+          window.addEventListener('resize', () => map.getViewPort().resize());
+          //Step 3: make the map interactive
+          // MapEvents enables the event system
+          // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+          var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+  
+          // Create the default UI components
+          var ui = H.ui.UI.createDefault(map, defaultLayers);
+  
+      </script>
 
   </body>

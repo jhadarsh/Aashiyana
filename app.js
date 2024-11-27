@@ -14,7 +14,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate"); //ejs-mate
 const Mess = require("./models/mess");
 const Review = require("./models/review");
-const Chat = require("./models/chats");
+
 const ExpressError = require("./utils/ExpressError");
 const { logedin, isowner } = require("./middleware");
 
@@ -188,6 +188,10 @@ app.delete("/mess/:id"
 
 app.get("/Room/Book",(req , res)=>{
   res.render("listings/book.ejs");
+})
+
+app.get("/listings/Questionnaire",(req , res)=>{
+  res.render("listings/Question.ejs");
 })
 //new mess
 

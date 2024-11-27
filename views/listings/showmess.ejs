@@ -44,7 +44,7 @@
           <h3> Owned by :<b><i>
                 <%= mess.owner.username %>
               </i></b></h3>
-          
+
           <p>Contact Number : <%= mess.contact_number %>
           </p>
 
@@ -95,7 +95,7 @@
             </div>
 
 
-            <div class="card-body"> 
+            <div class="card-body">
               <form id="chatForm">
                 <div class="form-group">
                   <input id="message" class="form-control" placeholder="Type a message...">
@@ -119,109 +119,35 @@
       </div>
     </div>
     </div>
+  </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
 
+      // Capture form submit event
+      document.getElementById('chatForm').addEventListener('submit', function (e) {
+        e.preventDefault();
 
+        // Get message and sender
+        const message = document.getElementById('message').value;
+        const sender = document.getElementById('sender').value;
 
-    <% if (currentuser) { %>
-      <div style="width: 50rem; margin-left: 90px;">
-        <hr>
-        <h4>Leave a review</h4>
-        <form action="/listings/<%= mess.id %>/review" method="post" class="needs-validation" novalidate>
-          <div class="mb-3 mt-3">
+        // Emit the message to the server
+        socket.emit('chat message', { sender, message });
 
-            <!-- <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range"> -->
-            <!-- https://github.com/LunarLogic/starability -->
-            <label for="rating" class="form-label">Ratings</label>
-            <fieldset class="starability-slot">
+        // Clear the input field
+        document.getElementById('message').value = '';
+      });
 
-
-              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
-                aria-label="No rating." />
-              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-              <label for="first-rate1" title="Terrible">1 star</label>
-              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-              <label for="first-rate2" title="Not good">2 stars</label>
-              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-              <label for="first-rate3" title="Average">3 stars</label>
-              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-              <label for="first-rate4" title="Very good">4 stars</label>
-              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-              <label for="first-rate5" title="Amazing">5 stars</label>
-            </fieldset>
-          </div>
-          <div>
-            <label for="comments" class="form-label">Comments</label>
-            <textarea name="review[comments]" id="comments" rows="5" cols="20" class="form-control" required></textarea>
-            <div class="invalid-feedback">
-              Please enter a short review!!
-            </div>
-          </div>
-
-          <button class="btn btn-dark delt mb-3 mt-3 col-4 offset-3">Submit</button>
-        </form>
-      </div>
-      <% } %>
-
-
-        <hr>
-        <h4 style="margin-left: 40%;">All reviews</h4>
-        <div class="review row row-col-lg-3">
-
-          <% for( review of mess.reviews) { %>
-            <div class="card recard" style="width: 19.25rem; ">
-              <div class="card-header">
-                <h4><b>@<%= review.author.username %></b></h4>
-              </div>
-              <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                  <p>
-                    <%=review.comments %>
-                  </p>
-                  <footer>
-                    <!-- https://github.com/LunarLogic/starability -->
-                    <p class="starability-result blockquote-footer card-text mb-3" data-rating="<%= review.rating %>">
-
-                    </p>
-                  </footer>
-
-                  <form class="mb-3" method="post"
-                    action="/listings/<%= mess._id %>/reviews/<%= review._id %>?_method=DELETE">
-                    <button class="btn btn-danger">Delete</button>
-                  </form>
-                </blockquote>
-              </div>
-            </div>
-            <% } %>
-
-        </div>
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-          const socket = io();
-
-          // Capture form submit event
-          document.getElementById('chatForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Get message and sender
-            const message = document.getElementById('message').value;
-            const sender = document.getElementById('sender').value;
-
-            // Emit the message to the server
-            socket.emit('chat message', { sender, message });
-
-            // Clear the input field
-            document.getElementById('message').value = '';
-          });
-
-          // Listen for incoming messages
-          socket.on('chat message', function (data) {
-            const messagesDiv = document.getElementById('messages');
-            const newMessage = document.createElement('div');
-            newMessage.classList.add('message');
-            newMessage.innerHTML = `<strong>${data.sender}:</strong> ${data.message}`;
-            messagesDiv.appendChild(newMessage);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-          });
-        </script>
+      // Listen for incoming messages
+      socket.on('chat message', function (data) {
+        const messagesDiv = document.getElementById('messages');
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('message');
+        newMessage.innerHTML = `<strong>${data.sender}:</strong> ${data.message}`;
+        messagesDiv.appendChild(newMessage);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      });
+    </script>
 
   </body>

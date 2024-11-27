@@ -17,6 +17,7 @@ function validatereview(req, res, next) {
   if (error) {
     let errmsg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(400, errmsg);
+   
   } else {
     next();
   }

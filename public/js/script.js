@@ -17,3 +17,8 @@
     }, false)
   })
 })()
+ // apikey: "DjIYjgwuL2cHaQlfzXJZSDJIXeRHeYzTigi4t8Tkj28"
+
+//for map
+
+ 
